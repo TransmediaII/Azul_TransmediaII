@@ -76,12 +76,30 @@ void UAzulGameSubsystem::RefreshDialogueWidget()
     {
         WidgetDialogue->Dialogue = nullptr;
         WidgetDialogue->SetDialogueText(FString());
+
+        // Limpiar nombre
+        if (WidgetDialogue->TextName)
+        {
+            WidgetDialogue->TextName->SetText(FText::GetEmpty());
+        }
+
         WidgetDialogue->SetVisibility(ESlateVisibility::Collapsed);
         return;
     }
 
     WidgetDialogue->Dialogue = ActiveDialogue;
+
+    // Texto procesado (ya sustituye {SonName})
     WidgetDialogue->SetDialogueText(GetActiveDialogueText());
+
+    // Nombre del que habla, desde la fila actual de la tabla
+    if (ActiveDialogue->CurrentRow && WidgetDialogue->TextName)
+    {
+        WidgetDialogue->TextName->SetText(
+            FText::FromString(ActiveDialogue->CurrentRow->Name)
+        );
+    }
+
     WidgetDialogue->SetVisibility(ESlateVisibility::Visible);
 }
 

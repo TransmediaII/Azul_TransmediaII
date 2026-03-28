@@ -28,6 +28,10 @@ public:
     // Se llama cuando el subsystem se inicializa
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+    //-------------------------------------NAME
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|SonName")
+    FString SonName;
+
     //---------------------------------------------------DIALOGOS
 
     /* Diálogo actualmente activo (si lo hay) */

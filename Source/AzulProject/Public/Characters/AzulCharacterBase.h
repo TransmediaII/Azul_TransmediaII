@@ -94,9 +94,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Azul|Story")
 	void AddStoryTag(const FGameplayTag& NewTag);
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|Story")
-	FString SonName;
-
 	UFUNCTION(BlueprintCallable, Category = "Azul|Story")
 	void SetCurrentGameplayTag();
 

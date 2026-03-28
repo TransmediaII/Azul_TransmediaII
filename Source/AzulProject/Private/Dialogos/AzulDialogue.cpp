@@ -4,6 +4,7 @@
 #include "Characters/AzulCharacterBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/OutputDeviceDebug.h"
+#include "AzulSubsystem/AzulGameSubsystem.h"
 
 void UAzulDialogue::StartDialogue(UDataTable* OverrideTable, bool bRestart)
 {
@@ -64,8 +65,6 @@ void UAzulDialogue::LoadCurrentRow()
 }
 
 
-
-
 FString UAzulDialogue::GetCurrentText() const
 {
     if (!CurrentRow)
@@ -86,15 +85,17 @@ void UAzulDialogue::UpdateWidget(UHorizontalBox* ChoicesContainer)
 
     if (ContinueButton)
     {
-        ContinueButton->SetVisibility(
-            CurrentRow->IsDecision
-            ? ESlateVisibility::Collapsed
-            : ESlateVisibility::Visible
-        );
+        const bool bIsDecision = CurrentRow->IsDecision;
+
+        // Siempre visible
+        ContinueButton->SetVisibility(ESlateVisibility::Visible);
+
+        // Deshabilitado si es decisión
+        ContinueButton->SetIsEnabled(!bIsDecision);
     }
 
     // 1. Primera vez: rellenar el array automáticamente desde el HorizontalBox
-// SIEMPRE reconstruir los botones
+    // SIEMPRE reconstruir los botones
     ChoiceButtons.Empty();
 
     const int32 ChildCount = ChoicesContainer->GetChildrenCount();
@@ -166,13 +167,25 @@ FString UAzulDialogue::ProcessSonName(const FString& InText) const
 {
     FString Out = InText;
 
-    AAzulCharacterBase* Player = Cast<AAzulCharacterBase>(
-        UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)
-    );
-
-    if (Player)
+    if (UWorld* World = GetWorld())
     {
-        Out = Out.Replace(TEXT("{SonName}"), *Player->SonName);
+        if (UGameInstance* GI = World->GetGameInstance())
+        {
+            if (UAzulGameSubsystem* GameSubsystem =
+                GI->GetSubsystem<UAzulGameSubsystem>())
+            {
+                const FString& SonNameString = GameSubsystem->SonName;
+
+                if (!SonNameString.IsEmpty())
+                {
+                    Out = Out.Replace(
+                        TEXT("{SonName}"),
+                        *SonNameString,
+                        ESearchCase::IgnoreCase
+                    );
+                }
+            }
+        }
     }
 
     return Out;

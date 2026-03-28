@@ -23,6 +23,9 @@ struct FDialogueRow : public FTableRowBase
     FString Text;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    FString Name;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
     int32 NextID;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -30,9 +33,6 @@ struct FDialogueRow : public FTableRowBase
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TArray<int32> ChoicesNext;
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    TArray<int32> ChoicesScore;
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDialogueUpdated);

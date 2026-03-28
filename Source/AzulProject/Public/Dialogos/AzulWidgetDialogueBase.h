@@ -21,6 +21,9 @@ public:
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Azul|Dialogue")
     UTextBlock* DialogueTextBlock = nullptr;
 
+    UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Azul|Dialogue")
+    UTextBlock* TextName = nullptr;
+
     /* Llamado desde el botón continuar */
     UFUNCTION(BlueprintCallable, Category = "Azul|Dialogue")
     void PressContinue();

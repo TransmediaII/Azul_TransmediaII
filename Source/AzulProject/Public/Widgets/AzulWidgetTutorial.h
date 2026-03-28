@@ -45,12 +45,16 @@ public:
         const FKeyEvent& InKeyEvent
     ) override;
 
+    UPROPERTY()
+    FString SonNameString;
 
 protected:
 
     virtual void NativeConstruct() override;
     virtual void NativeOnInitialized() override;
     virtual void NativeDestruct() override;
+
+
 
     /* -------- WIDGETS -------- */
 

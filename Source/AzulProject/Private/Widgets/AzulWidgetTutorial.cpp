@@ -2,6 +2,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Characters/AzulCharacterBase.h"
 #include "AzulSubsystem/AzulTutorialSubsystem.h"
+#include "AzulSubsystem/AzulGameSubsystem.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UAzulWidgetTutorial::NativeConstruct()
@@ -48,8 +49,13 @@ void UAzulWidgetTutorial::NativeConstruct()
                 &UAzulWidgetTutorial::HandleTutorialCompleted
             );
         }
-    }
 
+        if (UAzulGameSubsystem* GameSubsystem =
+            GetGameInstance()->GetSubsystem<UAzulGameSubsystem>())
+        {
+            SonNameString = GameSubsystem->SonName;
+        }
+    }
 }
 
 void UAzulWidgetTutorial::NativeOnInitialized()
@@ -416,13 +422,6 @@ void UAzulWidgetTutorial::OnContinueButtonPressed()
 
                 //Character->UnblockPlayerControl();
                 Character->OpenMirilla();
-                FString SonNameString;
-
-                // Si SonName es FString
-                SonNameString = Character->SonName;
-
-                // Si SonName es FName (usa esta línea en vez de la anterior)
-                // SonNameString = Character->SonName.ToString();
 
                 FString TutorialString = FString::Printf(
                     TEXT("%s is crying, what could be wrong with him?"),
@@ -539,7 +538,6 @@ void UAzulWidgetTutorial::CloseAllInteractHelp()
     {
         if (AAzulCharacterBase* Character = Cast<AAzulCharacterBase>(PC->GetPawn()))
         {
-            FString SonNameString = Character->SonName;
 
             FString TutorialString = FString::Printf(
                 TEXT("%s is crying, what could be wrong with him?"),
@@ -549,7 +547,6 @@ void UAzulWidgetTutorial::CloseAllInteractHelp()
             SetTutorialText(TutorialString);
         }
     }
-
 }
 
 

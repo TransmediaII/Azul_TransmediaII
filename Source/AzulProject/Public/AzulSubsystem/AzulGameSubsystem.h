@@ -121,11 +121,18 @@ public:
     FTransform TransformChosenGorro;
 
 
-    //-------------------------PLANETAS---------------------------------------------
+    //-------------------------PLANETAS
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|Planetas")
     bool  bPlanetsCompleted = false;
     UFUNCTION(BlueprintCallable, Category = "Azul|Planetas")
     void ChangePlanetsToCompleted();
+
+    //-------------------------ATICO
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Atico")
+    FString LastLevelBeforeAtico;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Atico")
+    bool bOpenFromAtico;
 
 
 private:

@@ -26,6 +26,5 @@ public:
     int32 CurrentGameplayIndex = 1;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    int32 MaxGameplays = 12;
-	
+    int32 MaxGameplays = 12;	
 };

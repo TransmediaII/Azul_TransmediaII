@@ -78,12 +78,12 @@ void UAzulWidgetHUDPlayer::SetStoryText(const FString& NewText, float Delay)
             StoryTextTimer,
             [this]()
             {
-                if (StoryText)
+                if (IsValid(StoryText))
                 {
                     StoryText->SetText(FText::GetEmpty());
                 }
 
-                if (TextBorder)
+                if (IsValid(TextBorder))
                 {
                     TextBorder->SetVisibility(ESlateVisibility::Hidden);
                 }

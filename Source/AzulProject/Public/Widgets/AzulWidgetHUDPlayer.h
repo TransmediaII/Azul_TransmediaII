@@ -50,6 +50,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Azul|StoryText")
     void SetStoryText(const FString& NewText, float Delay);
 
+    UFUNCTION(BlueprintCallable, Category = "Azul|StoryText")
+    void ClearStoryText();
+
 protected:
     FTimerHandle StoryTextTimer;
 };

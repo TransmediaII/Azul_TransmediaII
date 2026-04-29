@@ -163,6 +163,14 @@ void UAzulWidgetTutorial::FirstPartTutorial(FGameplayTag StepTag, bool bComplete
     // ---------- LOOK ----------
     if (StepTag == FGameplayTag::RequestGameplayTag("Tutorial.First.Look"))
     {
+        if (UGameInstance* GI = GetGameInstance())
+        {
+            if (UAzulTutorialSubsystem* TutorialSubsystem = GI->GetSubsystem<UAzulTutorialSubsystem>())
+            {
+                TutorialSubsystem->bisInteractStart = true;
+            }
+        }
+        
         SetTaskCompleted(CheckBox_3, TareaText_3);
 
         ContinueButton->SetVisibility(ESlateVisibility::Hidden);
@@ -500,6 +508,15 @@ void UAzulWidgetTutorial::CloseAllInteractHelp()
         if (AAzulCharacterBase* Character = Cast<AAzulCharacterBase>(PC->GetPawn()))
         {
             Character->OpenMirilla();
+
+            if (UGameInstance* GI = GetGameInstance())
+            {
+                if (UAzulTutorialSubsystem* TutorialSubsystem = GI->GetSubsystem<UAzulTutorialSubsystem>())
+                {
+                    TutorialSubsystem->bWaitingFirstInteract = true;
+                }
+            }
+
             if (Character->GetCharacterMovement())
             {
                 Character->GetCharacterMovement()->SetMovementMode(MOVE_Walking);

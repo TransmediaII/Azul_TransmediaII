@@ -32,10 +32,12 @@ class AZULPROJECT_API UAzulLibrary : public UBlueprintFunctionLibrary
 
 public:
 
-    UFUNCTION(BlueprintCallable, Category = "AzulLibrary")
+    UFUNCTION(BlueprintCallable, Category = "AzulLibrary|String")
     static bool IsStringAlphabeticNoSpaces(const FString& Input);
 
-    UFUNCTION(BlueprintCallable, Category = "Levels", meta = (ExpandEnumAsExecs = "Branch"))
+    UFUNCTION(BlueprintCallable, Category = "AzulLibrary|Levels", meta = (ExpandEnumAsExecs = "Branch"))
     static void SwitchLevelByName(const FString& LevelName, EGameplayLevelBranch& Branch);
 	
+    UFUNCTION(BlueprintPure, Category = "AzulLibrary|SonName", meta = (WorldContext = "WorldContextObject"))
+    static FString ReplaceSonName(const UObject* WorldContextObject, const FString& InputText);
 };

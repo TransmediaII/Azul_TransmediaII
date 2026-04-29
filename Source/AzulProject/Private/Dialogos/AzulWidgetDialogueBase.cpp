@@ -22,6 +22,7 @@
 #include "Engine/GameInstance.h"
 #include "Input/Reply.h"
 #include "InputCoreTypes.h"
+#include "Libraries/AzulLibrary.h"
 
 void UAzulWidgetDialogueBase::NativeConstruct()
 {
@@ -193,23 +194,16 @@ void UAzulWidgetDialogueBase::SetSpeakerName(const FString& NewName)
         return;
     }
 
-    FString FinalText = NewName;
-
-    if (UGameInstance* GI = GetGameInstance())
+    if (BorderName && TextName)
     {
-        if (UAzulGameSubsystem* GameSubsystem = GI->GetSubsystem<UAzulGameSubsystem>())
-        {
-            if (!GameSubsystem->SonName.IsEmpty())
-            {
-                FinalText = FinalText.Replace(
-                    TEXT("{SonName}"),
-                    *GameSubsystem->SonName,
-                    ESearchCase::IgnoreCase
-                );
-            }
-        }
+        BorderName->SetVisibility(
+            TextName->GetText().IsEmpty()
+            ? ESlateVisibility::Hidden
+            : ESlateVisibility::Visible
+        );
     }
 
+    FString FinalText = UAzulLibrary::ReplaceSonName(this, NewName);
     TextName->SetText(FText::FromString(FinalText));
 }
 

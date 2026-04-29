@@ -1,6 +1,7 @@
 #include "Widgets/AzulWidgetHUDPlayer.h"
 #include "AzulSubsystem/AzulGameSubsystem.h"
 #include "Engine/GameInstance.h"
+#include "Libraries/AzulLibrary.h"
 
 void UAzulWidgetHUDPlayer::SetUIState(EInteractUIState NewState)
 {
@@ -28,22 +29,7 @@ void UAzulWidgetHUDPlayer::SetStoryText(const FString& NewText, float Delay)
         return;
     }
 
-    FString FinalText = NewText;
-
-    if (UGameInstance* GI = GetGameInstance())
-    {
-        if (UAzulGameSubsystem* GameSubsystem = GI->GetSubsystem<UAzulGameSubsystem>())
-        {
-            if (!GameSubsystem->SonName.IsEmpty())
-            {
-                FinalText = FinalText.Replace(
-                    TEXT("{SonName}"),
-                    *GameSubsystem->SonName,
-                    ESearchCase::IgnoreCase
-                );
-            }
-        }
-    }
+    const FString FinalText = UAzulLibrary::ReplaceSonName(this, NewText);
 
     GetWorld()->GetTimerManager().ClearTimer(StoryTextTimer);
 
@@ -76,20 +62,23 @@ void UAzulWidgetHUDPlayer::SetStoryText(const FString& NewText, float Delay)
     {
         GetWorld()->GetTimerManager().SetTimer(
             StoryTextTimer,
-            [this]()
-            {
-                if (IsValid(StoryText))
-                {
-                    StoryText->SetText(FText::GetEmpty());
-                }
-
-                if (IsValid(TextBorder))
-                {
-                    TextBorder->SetVisibility(ESlateVisibility::Hidden);
-                }
-            },
+            this,
+            &UAzulWidgetHUDPlayer::ClearStoryText,
             Delay,
             false
         );
+    }
+}
+
+void UAzulWidgetHUDPlayer::ClearStoryText()
+{
+    if (StoryText)
+    {
+        StoryText->SetText(FText::GetEmpty());
+    }
+
+    if (TextBorder)
+    {
+        TextBorder->SetVisibility(ESlateVisibility::Hidden);
     }
 }

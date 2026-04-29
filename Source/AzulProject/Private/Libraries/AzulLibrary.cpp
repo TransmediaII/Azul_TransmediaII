@@ -1,7 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "Libraries/AzulLibrary.h"
+#include "AzulSubsystem/AzulGameSubsystem.h"
+#include "Engine/World.h"
+#include "Engine/GameInstance.h"
 
 
 bool UAzulLibrary::IsStringAlphabeticNoSpaces(const FString& Input)
@@ -39,4 +39,35 @@ void UAzulLibrary::SwitchLevelByName(const FString& LevelName, EGameplayLevelBra
     else if (LevelName == TEXT("LV_Gameplay_10")) Branch = EGameplayLevelBranch::LV_Gameplay_10;
     else if (LevelName == TEXT("LV_Gameplay_11")) Branch = EGameplayLevelBranch::LV_Gameplay_11;
     else                                          Branch = EGameplayLevelBranch::LV_Gameplay_12;
+}
+
+FString UAzulLibrary::ReplaceSonName(const UObject* WorldContextObject, const FString& InputText)
+{
+    FString FinalText = InputText;
+
+    if (!WorldContextObject)
+    {
+        return FinalText;
+    }
+
+    UWorld* World = WorldContextObject->GetWorld();
+    if (!World)
+    {
+        return FinalText;
+    }
+
+    UGameInstance* GI = World->GetGameInstance();
+    if (!GI)
+    {
+        return FinalText;
+    }
+
+    UAzulGameSubsystem* GameSubsystem = GI->GetSubsystem<UAzulGameSubsystem>();
+    if (!GameSubsystem || GameSubsystem->SonName.IsEmpty())
+    {
+        return FinalText;
+    }
+
+    FinalText.ReplaceInline(TEXT("SonName"), *GameSubsystem->SonName, ESearchCase::IgnoreCase);
+    return FinalText;
 }

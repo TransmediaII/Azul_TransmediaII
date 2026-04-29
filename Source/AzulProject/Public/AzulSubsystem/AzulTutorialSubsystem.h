@@ -42,6 +42,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Azul|Tutorial")
     bool IsTutorialCompleted() const;
 
+    UPROPERTY(BlueprintReadWrite, Category = "Azul|Tutorial")
+    bool bWaitingFirstInteract = false;
+
+    UPROPERTY(BlueprintReadWrite, Category = "Azul|Tutorial")
+    bool bisInteractStart = false;
+
     /* Evento: un paso individual se completa */
     UPROPERTY(BlueprintAssignable)
     FTutorialStepUpdated OnTutorialStepUpdated;

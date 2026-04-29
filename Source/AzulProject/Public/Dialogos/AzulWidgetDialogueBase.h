@@ -21,6 +21,7 @@
 
 class UAzulDialogue;
 class UTextBlock;
+class UBorder;
 class UButton;
 
 UCLASS()
@@ -41,6 +42,9 @@ public:
     /** Nombre del personaje que habla */
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Azul|Dialogue")
     UTextBlock* TextName = nullptr;
+
+    UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Azul|Dialogue")
+    UBorder* BorderName = nullptr;
 
     /** Botón de continuar */
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget), Category = "Azul|Dialogue")

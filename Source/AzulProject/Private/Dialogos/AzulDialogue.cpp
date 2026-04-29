@@ -1,6 +1,7 @@
 ﻿#include "Dialogos/AzulDialogue.h"
 #include "AzulSubsystem/AzulGameSubsystem.h"
 #include "Engine/GameInstance.h"
+#include "Libraries/AzulLibrary.h"
 
 void UAzulDialogue::StartDialogue(UDataTable* OverrideTable, bool bRestart)
 {
@@ -78,29 +79,7 @@ FString UAzulDialogue::GetProcessedCurrentText() const
 
 FString UAzulDialogue::ProcessSonName(const FString& InText) const
 {
-    FString Out = InText;
-
-    if (UWorld* World = GetWorld())
-    {
-        if (UGameInstance* GI = World->GetGameInstance())
-        {
-            if (UAzulGameSubsystem* GameSubsystem = GI->GetSubsystem<UAzulGameSubsystem>())
-            {
-                const FString& SonNameString = GameSubsystem->SonName;
-
-                if (!SonNameString.IsEmpty())
-                {
-                    Out = Out.Replace(
-                        TEXT("{SonName}"),
-                        *SonNameString,
-                        ESearchCase::IgnoreCase
-                    );
-                }
-            }
-        }
-    }
-
-    return Out;
+    return UAzulLibrary::ReplaceSonName(this, InText);
 }
 
 void UAzulDialogue::ContinueDialogue()

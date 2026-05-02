@@ -687,8 +687,13 @@ void UAzulGameSubsystem::RequestAdvanceDialogue()
     ActiveDialogue->ContinueDialogue();
 }
 
-void UAzulGameSubsystem::ChangePlanetsToCompleted() {
-    bPlanetsCompleted = true;
+void UAzulGameSubsystem::ChangePlanetsToCompletedCorrectly() {
+    bPlanetsCompletedCorrectly = true;
+    UE_LOG(LogTemp, Warning, TEXT("PlanetsCompletedCorrectly"));
+}
+
+void UAzulGameSubsystem::ChangePlanetsAllPlaced() {
+    bPlanetsAllPlaced = true;
     UE_LOG(LogTemp, Warning, TEXT("PlanetsCompleted"));
 }
 

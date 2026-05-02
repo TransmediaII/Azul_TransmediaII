@@ -179,9 +179,13 @@ public:
 
     //-------------------------PLANETAS
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|Planetas")
-    bool  bPlanetsCompleted = false;
+    bool  bPlanetsCompletedCorrectly = false;
+    UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|Planetas")
+    bool  bPlanetsAllPlaced = false;
     UFUNCTION(BlueprintCallable, Category = "Azul|Planetas")
-    void ChangePlanetsToCompleted();
+    void ChangePlanetsToCompletedCorrectly();
+    UFUNCTION(BlueprintCallable, Category = "Azul|Planetas")
+    void ChangePlanetsAllPlaced();
 
     //-------------------------COCHONGO
     UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Azul|Cochongo")

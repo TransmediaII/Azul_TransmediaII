@@ -203,7 +203,7 @@ void UAzulWidgetDialogueBase::RefreshDecisionUI()
         DecisionsDelayTimer,
         this,
         &UAzulWidgetDialogueBase::ShowDecisionButtons,
-        3.0f,
+        2.0f,
         false
     );
 }

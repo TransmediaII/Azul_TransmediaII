@@ -13,7 +13,6 @@
 #include "Widgets/AzulWidgetHUDPlayer.h"
 #include "AzulCharacterBase.generated.h"
 
-
 UENUM(BlueprintType)
 enum class EAzulControlMode : uint8
 {
@@ -22,7 +21,6 @@ enum class EAzulControlMode : uint8
 	Look,
 	Disabled
 };
-
 
 UCLASS()
 class AZULPROJECT_API AAzulCharacterBase : public ACharacter, public IAzulInteractuableInterface
@@ -37,6 +35,18 @@ protected:
 
 public:	
 	virtual void Tick(float DeltaTime) override;
+
+	//-------------------------------------HIJO SK MESH-------------------------------
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Son Mesh")
+	USkeletalMesh* SonMesh = nullptr;
+
+	// Prefijo de tus niveles, por ejemplo: LV_Gameplay_
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Level Check")
+	FString GameplayLevelPrefix = TEXT("LV_Gameplay_");
+
+	// Número de nivel mínimo desde el que se cambia el mesh
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Level Check")
+	int32 MinimumGameplayLevelForMeshChange = 11;
 
 	//-------------------------INTERACTUAR----------------------------------------------
 
@@ -94,10 +104,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Azul|Story")
 	void SetCurrentGameplayTag();
-
-	//---------------------------BOLSO---------------------------------------------
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Azul|Bolso")
-	UAzulBolsoComponent* BolsoComponent;
 
 	//---------------------------HILO--------------------------------------------
 

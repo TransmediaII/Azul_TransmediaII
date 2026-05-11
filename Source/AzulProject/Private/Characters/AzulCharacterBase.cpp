@@ -1,5 +1,4 @@
 ﻿#include "Characters/AzulCharacterBase.h"
-//#include "Widgets/AzulWidgetBolsoBase.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Interfaces/AzulInteractuableInterface.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -7,7 +6,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
 #include "GameFramework/PlayerController.h"
-#include "AzulComponentes/AzulBolsoComponent.h"
 #include "EngineUtils.h"
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
@@ -22,8 +20,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogAzulCharacter, Log, All);
 AAzulCharacterBase::AAzulCharacterBase()
 {
     PrimaryActorTick.bCanEverTick = true;
-
-    //BolsoComponent = CreateDefaultSubobject<UAzulBolsoComponent>(TEXT("BolsoComponent"));
 
     CurrentInteractable = nullptr;
 
@@ -90,6 +86,26 @@ void AAzulCharacterBase::BeginPlay()
     SetCurrentGameplayTag();
 
     UE_LOG(LogAzulCharacter, Warning, TEXT("[BeginPlay] ActiveStoryTags inicializados"));
+
+    //CAMBIA DE SKELETAL MESH A PARTIR DEL GAMEPLAY 11 AL DEL NIÑO.
+    const FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(this, true);
+
+    // Comprueba que el nombre empieza por "LV_Gameplay_"
+    if (CurrentLevelName.StartsWith(GameplayLevelPrefix))
+    {
+        // Quita el prefijo y se queda solo con el número
+        const FString LevelNumberString = CurrentLevelName.RightChop(GameplayLevelPrefix.Len());
+
+        const int32 CurrentGameplayLevelNumber = FCString::Atoi(*LevelNumberString);
+
+        if (CurrentGameplayLevelNumber >= MinimumGameplayLevelForMeshChange)
+        {
+            if (SonMesh)
+            {
+                GetMesh()->SetSkeletalMesh(SonMesh);
+            }
+        }
+    }
 }
 
 // Called every frame

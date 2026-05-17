@@ -38,6 +38,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "AzulLibrary|Levels", meta = (ExpandEnumAsExecs = "Branch"))
     static void SwitchLevelByName(const FString& LevelName, EGameplayLevelBranch& Branch);
 	
-    UFUNCTION(BlueprintPure, Category = "AzulLibrary|SonName", meta = (WorldContext = "WorldContextObject"))
+    UFUNCTION(BlueprintCallable, Category = "AzulLibrary|SonName", meta = (WorldContext = "WorldContextObject"))
     static FString ReplaceSonName(const UObject* WorldContextObject, const FString& InputText);
 };

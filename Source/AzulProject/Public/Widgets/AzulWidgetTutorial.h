@@ -65,9 +65,6 @@ protected:
     UBorder* TextBorder;
 
     UPROPERTY(meta = (BindWidget))
-    UVerticalBox* TutorialVerticalBox;
-
-    UPROPERTY(meta = (BindWidget))
     UVerticalBox* CheckBoxVerticalBox;
 
     UPROPERTY(meta = (BindWidget))
@@ -84,9 +81,6 @@ protected:
 
     UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
     UTextBlock* TutorialText;
-    
-    UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-    UTextBlock* TutorialPageText;
 
     UPROPERTY(meta = (BindWidget))
     UTextBlock* TareaText_1;
@@ -112,6 +106,16 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UBorder* InteractHelp_ThirdSet;
 
+    // Imagen dentro del TutorialBorder
+    UPROPERTY(meta = (BindWidgetOptional))
+    UImage* TutorialImage;
+
+    // Texturas para Tutorial 1/2 y 2/2
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Tutorial")
+    UTexture2D* TutorialTexture_1;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Azul|Tutorial")
+    UTexture2D* TutorialTexture_2;
 
     bool bSecondPartActivated = false;
 

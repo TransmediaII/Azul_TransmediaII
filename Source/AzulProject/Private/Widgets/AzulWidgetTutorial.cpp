@@ -15,6 +15,12 @@ void UAzulWidgetTutorial::NativeConstruct()
     CheckBox_2->SetVisibility(ESlateVisibility::HitTestInvisible);
     CheckBox_3->SetVisibility(ESlateVisibility::HitTestInvisible);
 
+    // Textura inicial (Tutorial 1/2)
+    if (TutorialImage && TutorialTexture_1)
+    {
+        TutorialImage->SetBrushFromTexture(TutorialTexture_1, true);
+    }
+
     if (InteractHelp_FirstSet)
         InteractHelp_FirstSet->SetVisibility(ESlateVisibility::Hidden);
 
@@ -22,7 +28,6 @@ void UAzulWidgetTutorial::NativeConstruct()
         InteractHelp_SecondSet->SetVisibility(ESlateVisibility::Hidden);
     if (InteractHelp_ThirdSet)
         InteractHelp_ThirdSet->SetVisibility(ESlateVisibility::Hidden);
-
 
     if (GetGameInstance())
     {
@@ -55,6 +60,31 @@ void UAzulWidgetTutorial::NativeConstruct()
         {
             SonNameString = GameSubsystem->SonName;
         }
+    }
+
+    if (TareaText_1)
+    {
+        FString Text1 = FString::Printf(
+            TEXT("Activate the thread to search for %s"),
+            *SonNameString
+        );
+        TareaText_1->SetText(FText::FromString(Text1));
+    }
+
+    if (TareaText_2)
+    {
+        FString Text2 = FString::Printf(
+            TEXT("Move towards %s"),
+            *SonNameString
+        );
+        TareaText_2->SetText(FText::FromString(Text2));
+    }
+
+    if (TareaText_3)
+    {
+        TareaText_3->SetText(
+            FText::FromString(TEXT("Move your head to look around"))
+        );
     }
 }
 
@@ -100,7 +130,7 @@ void UAzulWidgetTutorial::NativeDestruct()
 
 void UAzulWidgetTutorial::FirstPartTutorial(FGameplayTag StepTag, bool bCompleted)
 {
-    if (!TutorialVerticalBox || !ContinueButton)
+    if (!ContinueButton)
         return;
 
     if (!bCompleted)
@@ -114,7 +144,7 @@ void UAzulWidgetTutorial::FirstPartTutorial(FGameplayTag StepTag, bool bComplete
         SetTaskCompleted(CheckBox_1, TareaText_1);
 
 
-        MainText = TEXT("This is the thread that will always take you to your son whenever you want it. It lasts 4 seconds, but you can remove it before that time by pressing the spacebar again. You cannot move while you are watching the thread.");
+        MainText = TEXT("This is the thread that will always take you to your son whenever you want it. You can remove it by pressing the spacebar again. You cannot move while is active.");
         GetWorld()->GetTimerManager().ClearTimer(TextTimer);
         
         //Pasa 2 segundos y cambiamos texto
@@ -444,14 +474,14 @@ void UAzulWidgetTutorial::SetCheckBoxsForSecondPart()
     CheckBox_2->SetIsChecked(false);
     CheckBox_3->SetIsChecked(false);
 
-    TutorialPageText->SetText(FText::FromString(TEXT("Tutorial 2/2")));
-    TareaText_1->SetText(FText::FromString(TEXT("Interact with any interactive object")));
-    TareaText_2->SetText(FText::FromString(TEXT("Take the manual.")));
-    TareaText_3->SetText(FText::FromString(TEXT("Open the manual with the M key")));
+    TareaText_1->SetText(FText::GetEmpty());
+    TareaText_2->SetText(FText::GetEmpty());
+    TareaText_3->SetText(FText::GetEmpty());
 
-    TareaText_1->SetColorAndOpacity(FSlateColor(FLinearColor::White));
-    TareaText_2->SetColorAndOpacity(FSlateColor(FLinearColor::White));
-    TareaText_3->SetColorAndOpacity(FSlateColor(FLinearColor::White));
+    if (TutorialTexture_2)
+    {
+        TutorialBorder->SetBrushFromTexture(TutorialTexture_2);
+    }
 
     if (InteractHelp_FirstSet)
         InteractHelp_FirstSet->SetVisibility(ESlateVisibility::Visible);
